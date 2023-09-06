@@ -1,3 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.react-flow__handle-right {
+    top: inherit;
+}
+
+.react-flow__handle {
+    position: inherit;
+    transform: none;
+    height: 0.7em;
+    width: 0.7em;
+}

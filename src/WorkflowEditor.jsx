@@ -1,7 +1,8 @@
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
-import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import { Bars3Icon, BellIcon, XMarkIcon, ArrowPathIcon } from '@heroicons/react/24/outline'
 
+import { PlayIcon, PauseIcon, StopIcon } from '@heroicons/react/20/solid'
 import NodeEditor from './NodeEditor'
 
 const user = {
@@ -18,7 +19,7 @@ const navigation = [
     { name: 'Workflow', href: '#', current: true },
     { name: 'Versions', href: '#', current: false },
     { name: 'Models', href: '#', current: false },
-    { name: 'Reports', href: '#', current: false },
+    { name: 'History', href: '#', current: false },
     { name: 'Settings', href: '#', current: false },
 ]
 const userNavigation = [
@@ -45,7 +46,7 @@ export default function WorkflowEditor() {
         ```
       */}
             <div className="flex flex-col h-screen">
-                <Disclosure as="nav" className="bg-gray-800">
+                <Disclosure as="nav" className="bg-gray-900">
                     {({ open }) => (
                         <>
                             <div className="mx-auto max-w-full px-4 sm:px-6 lg:px-8">
@@ -79,7 +80,7 @@ export default function WorkflowEditor() {
                                         </div>
                                     </div>
                                     <div className="hidden md:block">
-                                        <div className="ml-4 flex items-center md:ml-6">
+                                        <div className="ml-2 flex items-center md:ml-6">
                                             <button
                                                 type="button"
                                                 className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
@@ -196,8 +197,27 @@ export default function WorkflowEditor() {
                     )}
                 </Disclosure>
 
-                <main className="flex-grow">
+                <main className="flex-grow relative">
                     <NodeEditor className="w-full h-full"/>
+
+                    <div className="absolute top-0 right-0 p-4">
+                        <div className="bg-white shadow-md rounded-xl">
+                            <div className="flex items-center space-x-2 p-2">
+                                <div className="flex items-center justify-center w-8 h-8 rounded">
+                                    <PlayIcon className="h-4 w-4 text-blue-600" />
+                                </div>
+                                <div className="border-r border-gray-200 h-8"></div>
+                                <div className="flex items-center justify-center w-8 h-8 rounded">
+                                    <PauseIcon className="h-4 w-4 text-slate-900" />
+                                </div>
+                                <div className="border-r border-gray-200 h-8"></div>
+                                <div className="flex items-center justify-center w-8 h-8 rounded">
+                                    <StopIcon className="h-4 w-4 text-slate-900" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </main>
             </div>
         </>

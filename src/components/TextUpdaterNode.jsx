@@ -1,129 +1,106 @@
-import { useCallback } from 'react';
-import { Handle, Position } from 'reactflow';
-import { QuestionMarkCircleIcon } from '@heroicons/react/20/solid'
-import { ChatBubbleBottomCenterIcon } from '@heroicons/react/24/outline'
+import React, {memo, useCallback} from "react";
+import {Handle, Position} from 'reactflow';
+import {CheckIcon, XMarkIcon} from '@heroicons/react/24/outline'
 
 //const handleStyle = { height: 10, width: 10, background: '#fff', border: '2px solid #F00' };
 
-function TextUpdaterNode({ data, isConnectable }) {
-    const onChange = useCallback((evt) => {
-        console.log(evt.target.value);
-    }, []);
+const HandleStyleCheck = {
+    top: {
+        // // right: -10,
+        // // top: 15,
+        // background: "#555",
+        // // minWidth: 20,
+        // // height: 20,
+        // borderRadius: 4,
+        // placeItems: "center",
+        // display: "grid",
+        // color: "#fff",
+        // zIndex: 2
+    },
+    bottom: {
+        // // right: -10,
+        // // // bottom: 1000,
+        // background: "#555",
+        // // minWidth: 20,
+        // // height: 20,
+        // borderRadius: 4,
+        // placeItems: "center",
+        // display: "grid",
+        // color: "#fff",
+        // zIndex: 2
+    },
 
+    bottom2: {
+        // // right: -10,
+        // // bottom: -15,
+        // background: "#555",
+        // // minWidth: 20,
+        // // height: 20,
+        // borderRadius: 4,
+        // placeItems: "center",
+        // display: "grid",
+        // color: "#fff",
+        // zIndex: 2
+    }
+};
+export default memo(({data, isConnectable, id: nodeId}) => {
     return (
-        <div className="bg-teal-400 shadow-md rounded-lg">
-            <div className="rounded-t-lg bg-teal-400 p-2">
-                <div className="text-xs font-bold">Load Model</div>
-            </div>
+        <>
+            <div className="bg-white rounded-lg shadow-md">
 
-            <div className="bg-white text-xs p-4">
-                <p>This is the content of the card.</p>
-            </div>
-
-            <div className="text-xs rounded-b-lg bg-gray-100 py-1 px-2">
-                {/* Footer */}
-                <p className="text-gray-600">2 commens</p>
-            </div>
-
-            <Handle
-                type="target"
-                position={Position.Left}
-                id="a"
-                isConnectable={isConnectable}
-            />
-
-            <Handle
-                type="source"
-                position={Position.Right}
-                id="b"
-                // className="h-4 w-4 bg-red-500"
-                isConnectable={isConnectable}
-            />
-
-            <Handle
-                type="source"
-                position={Position.Right}
-                id="c"
-                // className="h-4 w-4 bg-red-500"
-                isConnectable={isConnectable}
-            />
-        </div>
-    )
-
-    /*
-    return (
-        <div className="px-4 py-2 shadow-md rounded-md bg-white border-2 border-stone-300">
-            <div className="mb-4">
-                <div className="flex justify-between">
-                    <h2 className="mr-auto font-bold">Load Model</h2>
-
-                    <div className="ml-auto">
-                        <button className="flex items-center text-blue-400">
-                            <QuestionMarkCircleIcon className="w-5" />
-                        </button>
-                    </div>
+                <div className="bg-gray-100 rounded-t-lg">
+                    <div className="text-sm font-bold p-1 ml-1 text-neutral-900">{data.title}</div>
                 </div>
 
                 <div className="border-t border-gray-300"></div>
-            </div>
 
+                <p className="text-xs font-regular text-gray-600 m-2">Inline configs, etc go here...</p>
+                <p className="text-xs font-regular text-gray-600 m-2">Inline configs, etc go here...</p>
+                <p className="text-xs font-regular text-gray-600 m-2">Inline configs, etc go here...</p>
+                <p className="text-xs font-regular text-gray-600 m-2">Inline configs, etc go here...</p>
+                <p className="text-xs font-regular text-gray-600 m-2">Inline configs, etc go here...</p>
 
+                <div className="border-t border-gray-300"></div>
 
-            <div className="mb-4">
-                <div>
-                    <label htmlFor="text">Text:</label>
-                    <input id="text" name="text" onChange={onChange} className="nodrag" />
+                <div className="p-2 bg-neutral-100">
+                    {data.targets.map((target, index) => (
+                        <div key={target.id} className="flex items-center justify-start">
+                            <div className="flex items-center">
+                                <Handle
+                                    type="target"
+                                    position="left"
+                                    id={target.id}
+                                    className="border-2 border-green-500 bg-green-300"
+                                    onConnect={data.onConnect}
+                                    isConnectable={isConnectable}
+                                />
+                                <div className="ml-1 text-xs font-semibold">{target.label}</div>
+                            </div>
+                        </div>
+                    ))}
+
+                    {data.sources.map((source, index) => (
+                        <div key={source.id} className="flex items-center justify-end py-0.5">
+                            <div className="flex items-center">
+                                <div className="mr-2 text-xs font-semibold">{source.label}</div>
+                                <Handle
+                                    type="source"
+                                    position="right"
+                                    id={source.id}
+                                    className={`border-2 border-${source.color}-500 bg-${source.color}-300`}
+                                    style={{...HandleStyleCheck.top}}
+                                    isConnectable={isConnectable}
+                                />
+                            </div>
+                        </div>
+                    ))}
                 </div>
+
+                <div className="border-t border-gray-300"></div>
+
+                <p className="text-xs font-regular text-green-500 px-2 pt-1 pb-1 bg-green-100 rounded-b-lg">Card content goes here.</p>
+
             </div>
-            <div className="mt-4 flex justify-inbetween">
-
-                <div className="ml-2">
-                    <button className="flex items-center">
-                        <ChatBubbleBottomCenterIcon className="w-4 h-4" />
-                    </button>
-                </div>
-                <div className="ml-2">
-                    3 new comments
-                </div>
-            </div>
-
-            <Handle
-                type="target"
-                position={Position.Left}
-                id="a"
-                className="h-4 w-4 bg-teal-500"
-                isConnectable={isConnectable}
-            />
-
-            <Handle
-                type="source"
-                position={Position.Right}
-                id="b"
-                className="h-4 w-4 bg-red-500"
-                isConnectable={isConnectable}
-            />
-
-
-        </div>
-
-
-
-        // <div className="text-updater-node">
-        //     <div>
-        //         <label htmlFor="text">Text:</label>
-        //         <input id="text" name="text" onChange={onChange} className="nodrag" />
-        //     </div>
-        //     <Handle
-        //         type="source"
-        //         position={Position.Left}
-        //         id="a"
-        //         style={handleStyle}
-        //         isConnectable={isConnectable}
-        //     />
-        //     <Handle type="source" position={Position.Right} id="b" isConnectable={isConnectable} />
-        // </div>
+        </>
     );
-     */
-}
-
-export default TextUpdaterNode;
+});
