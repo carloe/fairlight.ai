@@ -1,15 +1,19 @@
-import React, { memo } from "react";
+import React, { memo, useContext } from "react";
 import { Handle } from 'reactflow';
 import PropTypes from 'prop-types';
+import { HandleDataTypeLookupContext } from './../HandleDataTypeContext';
+
 
 const CustomNode = memo(({ data, isConnectable }) => {
+    const getValue = useContext(HandleDataTypeLookupContext);
     const maxLength = Math.max(data.targets.length, data.sources.length);
 
     const getColorClass = (colorClass) => `border-2 border-${colorClass}-500 bg-${colorClass}-300`;
 
     const renderTarget = (target, onConnect) => {
         if (target) {
-            const targetClassName = getColorClass(target.colorClass);
+            const colorClass = getValue(target.dataType);
+            const targetClassName = getColorClass(colorClass);
 
             return (
                 <div key={target.id} className="flex items-center">
@@ -32,7 +36,8 @@ const CustomNode = memo(({ data, isConnectable }) => {
 
     const renderSource = (source, onConnect) => {
         if (source) {
-            const sourceClassName = getColorClass(source.colorClass);
+            const colorClass = getValue(source.dataType);
+            const sourceClassName = getColorClass(colorClass);
             return (
                 <div key={source.id} className="flex items-center ml-auto">
                     <div className="flex items-center">
@@ -93,12 +98,12 @@ CustomNode.propTypes = {
         targets: PropTypes.arrayOf(PropTypes.shape({
             id: PropTypes.string.isRequired,
             label: PropTypes.string.isRequired,
-            colorClass: PropTypes.string.isRequired,
+            dataType: PropTypes.string.isRequired,
         })).isRequired,
         sources: PropTypes.arrayOf(PropTypes.shape({
             id: PropTypes.string.isRequired,
             label: PropTypes.string.isRequired,
-            colorClass: PropTypes.string.isRequired,
+            dataType: PropTypes.string.isRequired,
         })).isRequired,
         onConnect: PropTypes.func.isRequired,
     }).isRequired,

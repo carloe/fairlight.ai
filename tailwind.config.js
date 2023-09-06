@@ -18,6 +18,8 @@ export default {
         'border-green-500', 'bg-green-300',
         'border-purple-500', 'bg-purple-300',
         'border-blue-500', 'bg-blue-300',
+        'border-neutral-500', 'bg-neutral-300',
+        'border-teal-500', 'bg-teal-300',
       ],
     },
   },

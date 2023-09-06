@@ -67,29 +67,29 @@ export default function App() {
                             {
                                 id: "t-model-a",
                                 label: "Model AB",
-                                colorClass: "green",
+                                dataType: "model",
                             },
                             {
                                 id: "t-model-b",
                                 label: "Model B",
-                                colorClass: "blue",
+                                dataType: "model",
                             }
                         ],
                     sources: [
                         {
                             id: "s-latent",
                             label: "Latent",
-                            colorClass: "purple",
+                            dataType: "latent",
                         },
                         {
                             id: "s-image",
                             label: "Image",
-                            colorClass: "blue",
+                            dataType: "image",
                         },
                         {
                             id: "s-mask",
                             label: "Mask",
-                            colorClass: "red",
+                            dataType: "imageMask",
                         }
                     ]
                 },
@@ -130,14 +130,6 @@ export default function App() {
                 animated: true,
                 style: { stroke: "#599e5e", strokeWidth: 3 }
             }
-            // {
-            //   id: 'e2b-4',
-            //   source: '2',
-            //   target: '4',
-            //   sourceHandle: 'b',
-            //   animated: true,
-            //   style: { stroke: '#fff' },
-            // },
         ]);
     }, [setEdges, setNodes]);
 
