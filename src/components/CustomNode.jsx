@@ -2,7 +2,7 @@ import React, { memo } from "react";
 import { Handle } from 'reactflow';
 import PropTypes from 'prop-types';
 
-const TextUpdaterNode = memo(({ data, isConnectable }) => {
+const CustomNode = memo(({ data, isConnectable }) => {
     const maxLength = Math.max(data.targets.length, data.sources.length);
 
     const getColorClass = (colorClass) => `border-2 border-${colorClass}-500 bg-${colorClass}-300`;
@@ -87,7 +87,7 @@ const TextUpdaterNode = memo(({ data, isConnectable }) => {
     );
 });
 
-TextUpdaterNode.propTypes = {
+CustomNode.propTypes = {
     data: PropTypes.shape({
         title: PropTypes.string.isRequired,
         targets: PropTypes.arrayOf(PropTypes.shape({
@@ -105,4 +105,4 @@ TextUpdaterNode.propTypes = {
     isConnectable: PropTypes.bool.isRequired,
 };
 
-export default TextUpdaterNode;
+export default CustomNode;

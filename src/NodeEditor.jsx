@@ -9,7 +9,7 @@ import ReactFlow, {
     Background,
     Panel
 } from "reactflow";
-import TextUpdaterNode from './components/TextUpdaterNode.jsx';
+import CustomNode from './components/CustomNode.jsx';
 import "reactflow/dist/style.css";
 import "./index.css";
 
@@ -17,7 +17,7 @@ const connectionLineStyle = { stroke: "#dedede", strokeWidth: 2};
 const snapGrid = [20, 20];
 const initBgColor = "#1A192B";
 const nodeTypes = {
-    textUpdater: TextUpdaterNode,
+    customNode: CustomNode,
 }
 
 export default function App() {
@@ -57,7 +57,7 @@ export default function App() {
             },
             {
                 id: "2",
-                type: "textUpdater",
+                type: "customNode",
                 data: {
                     title: "Text Updater",
                     onChange: onChange,
@@ -116,6 +116,7 @@ export default function App() {
                 id: "e1-2",
                 source: "1",
                 target: "2",
+                type: 'smoothstep',
                 targetHandle: "t-model-b",
                 animated: false,
                 style: { stroke: "#599e5e", strokeWidth: 3 }
@@ -124,6 +125,7 @@ export default function App() {
                 id: "e2a-3",
                 source: "2",
                 target: "3",
+                type: 'smoothstep',
                 sourceHandle: "s-latent",
                 animated: true,
                 style: { stroke: "#599e5e", strokeWidth: 3 }
@@ -142,7 +144,7 @@ export default function App() {
     const onConnect = useCallback(
         (params) =>
             setEdges((eds) =>
-                addEdge({ ...params, animated: true, style: { stroke: "#599e5e", strokeWidth: 3 } }, eds)
+                addEdge({ ...params, animated: false, type: 'smoothstep', style: { stroke: "#bababa", strokeWidth: 3 } }, eds)
             ),
         [setEdges]
     );
