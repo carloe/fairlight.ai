@@ -9,6 +9,14 @@
     width: 10px;
 }
 
+.react-flow__handle-connecting {
+    opacity: 50%;
+}
+
+.react-flow__handle-valid {
+    opacity: 100%;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

@@ -96,6 +96,25 @@ export default function App() {
                 position: { x: 300, y: 50 }
             },
             {
+                id: "5",
+                type: "customNode",
+                data: {
+                    title: "Out",
+                    onChange: onChange,
+                    onConnect: onConnect,
+                    color: initBgColor,
+                    targets: [
+                        {
+                            id: "t-latent-c",
+                            label: "Latent",
+                            dataType: "latent",
+                        },
+                    ],
+                    sources: []
+                },
+                position: { x: 350, y: 50 }
+            },
+            {
                 id: "3",
                 type: "output",
                 data: { label: "Output A" },
@@ -133,6 +152,45 @@ export default function App() {
         ]);
     }, [setEdges, setNodes]);
 
+    const findTargetHandleById = (id) => {
+        for (const node of nodes) {
+            if (node.data.targets) {
+                for (const target of node.data.targets) {
+                    if (target.id === id) {
+                        return target;
+                    }
+                }
+            }
+        }
+        return null; // Return null if the target is not found in any object
+    };
+
+    const findSourceHandleById = (id) => {
+        for (const node of nodes) {
+            if (node.data.sources) {
+                for (const source of node.data.sources) {
+                    if (source.id === id) {
+                        return source;
+                    }
+                }
+            }
+        }
+        return null; // Return null if the target is not found in any object
+    };
+
+    const isValidConnection = (connection) => {
+        console.log('isValidConnection', connection);
+
+        const sourceHandle = findSourceHandleById(connection.sourceHandle);
+        const targetHandle = findTargetHandleById(connection.targetHandle);
+
+        if (!sourceHandle || !targetHandle) {
+            return false;
+        }
+
+        return sourceHandle.dataType === targetHandle.dataType;
+    }
+
     const onConnect = useCallback(
         (params) =>
             setEdges((eds) =>
@@ -140,6 +198,13 @@ export default function App() {
             ),
         [setEdges]
     );
+
+    const onConnectStart = (_, { nodeId, handleType, handleId }) => {
+        console.log('on connect start', {nodeId, handleType, handleId});
+    };
+    const onConnectEnd = (event) => {
+        console.log('on connect end', event);
+    }
 
     const renderRunControlls = () => {
         return (
@@ -169,9 +234,12 @@ export default function App() {
             edges={edges}
             onNodesChange={onNodesChange}
             onEdgesChange={onEdgesChange}
+            onConnectStart={onConnectStart}
+            onConnectEnd={onConnectEnd}
             onConnect={onConnect}
             style={{ background: bgColor }}
             nodeTypes={nodeTypes}
+            isValidConnection={isValidConnection}
             connectionLineStyle={connectionLineStyle}
             snapToGrid={true}
             snapGrid={snapGrid}
