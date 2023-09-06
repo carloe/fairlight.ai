@@ -1,12 +1,15 @@
 import React, { memo } from "react";
 import { Handle } from 'reactflow';
+import PropTypes from 'prop-types';
 
-export default memo(({ data, isConnectable }) => {
+const TextUpdaterNode = memo(({ data, isConnectable }) => {
     const maxLength = Math.max(data.targets.length, data.sources.length);
+
+    const getColorClass = (colorClass) => `border-2 border-${colorClass}-500 bg-${colorClass}-300`;
 
     const renderTarget = (target, onConnect) => {
         if (target) {
-            const targetClassName = `border-2 border-${target.colorClass}-500 bg-${target.colorClass}-300`;
+            const targetClassName = getColorClass(target.colorClass);
 
             return (
                 <div key={target.id} className="flex items-center">
@@ -19,7 +22,7 @@ export default memo(({ data, isConnectable }) => {
                             onConnect={onConnect}
                             isConnectable={isConnectable}
                         />
-                        <div className="ml-0.5">{target.label}</div>
+                        <div className="ml-1">{target.label}</div>
                     </div>
                 </div>
             );
@@ -29,17 +32,17 @@ export default memo(({ data, isConnectable }) => {
 
     const renderSource = (source, onConnect) => {
         if (source) {
-            const sourceClassName = `border-2 border-${source.colorClass}-500 bg-${source.colorClass}-300`;
-
+            const sourceClassName = getColorClass(source.colorClass);
             return (
                 <div key={source.id} className="flex items-center ml-auto">
                     <div className="flex items-center">
-                        <div className="mr-0.5">{source.label}</div>
+                        <div className="mr-1">{source.label}</div>
                         <Handle
                             type="source"
                             position="right"
                             id={source.id}
                             className={sourceClassName}
+                            onConnect={onConnect}
                             isConnectable={isConnectable}
                         />
                     </div>
@@ -57,7 +60,9 @@ export default memo(({ data, isConnectable }) => {
 
             <div className="border-t border-gray-300"></div>
 
-            <p className="text-xs font-regular text-gray-600 m-2">Inline configs, etc go here...</p>
+            <div className="m-2">
+                Content
+            </div>
 
             <div className="border-t border-gray-300"></div>
 
@@ -66,7 +71,7 @@ export default memo(({ data, isConnectable }) => {
                     const target = data.targets[index] || null;
                     const source = data.sources[index] || null;
                     return (
-                        <div key={index} className="flex items-center text-xs font-regular my-2">
+                        <div key={index} className="flex items-center text-xs font-semibold text-neutral-700 my-0.5">
                             {renderTarget(target, data.onConnect)}
                             <div className="flex-grow"></div>
                             {renderSource(source, data.onConnect)}
@@ -81,3 +86,23 @@ export default memo(({ data, isConnectable }) => {
         </div>
     );
 });
+
+TextUpdaterNode.propTypes = {
+    data: PropTypes.shape({
+        title: PropTypes.string.isRequired,
+        targets: PropTypes.arrayOf(PropTypes.shape({
+            id: PropTypes.string.isRequired,
+            label: PropTypes.string.isRequired,
+            colorClass: PropTypes.string.isRequired,
+        })).isRequired,
+        sources: PropTypes.arrayOf(PropTypes.shape({
+            id: PropTypes.string.isRequired,
+            label: PropTypes.string.isRequired,
+            colorClass: PropTypes.string.isRequired,
+        })).isRequired,
+        onConnect: PropTypes.func.isRequired,
+    }).isRequired,
+    isConnectable: PropTypes.bool.isRequired,
+};
+
+export default TextUpdaterNode;

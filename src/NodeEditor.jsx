@@ -61,6 +61,7 @@ export default function App() {
                 data: {
                     title: "Text Updater",
                     onChange: onChange,
+                    onConnect: onConnect,
                     color: initBgColor,
                     targets: [
                             {
@@ -78,7 +79,7 @@ export default function App() {
                         {
                             id: "s-latent",
                             label: "Latent",
-                            colorClass: "blue",
+                            colorClass: "purple",
                         },
                         {
                             id: "s-image",

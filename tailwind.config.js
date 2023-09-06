@@ -11,6 +11,16 @@ export default {
       },
     },
   },
+  purge: {
+    options: {
+      safelist: [
+        'border-red-500', 'bg-red-300',
+        'border-green-500', 'bg-green-300',
+        'border-purple-500', 'bg-purple-300',
+        'border-blue-500', 'bg-blue-300',
+      ],
+    },
+  },
   plugins: [],
 }
 
