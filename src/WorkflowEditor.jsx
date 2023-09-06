@@ -2,7 +2,6 @@ import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon, ArrowPathIcon } from '@heroicons/react/24/outline'
 
-import { PlayIcon, PauseIcon, StopIcon } from '@heroicons/react/20/solid'
 import NodeEditor from './NodeEditor'
 
 const user = {
@@ -199,25 +198,6 @@ export default function WorkflowEditor() {
 
                 <main className="flex-grow relative">
                     <NodeEditor className="w-full h-full"/>
-
-                    <div className="absolute top-0 right-0 p-4">
-                        <div className="bg-white shadow-md rounded-xl">
-                            <div className="flex items-center space-x-2 p-2">
-                                <div className="flex items-center justify-center w-8 h-8 rounded">
-                                    <PlayIcon className="h-4 w-4 text-blue-600" />
-                                </div>
-                                <div className="border-r border-gray-200 h-8"></div>
-                                <div className="flex items-center justify-center w-8 h-8 rounded">
-                                    <PauseIcon className="h-4 w-4 text-slate-900" />
-                                </div>
-                                <div className="border-r border-gray-200 h-8"></div>
-                                <div className="flex items-center justify-center w-8 h-8 rounded">
-                                    <StopIcon className="h-4 w-4 text-slate-900" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                 </main>
             </div>
         </>

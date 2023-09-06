@@ -1,43 +1,24 @@
-import React, { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
+import { PlayIcon, PauseIcon, StopIcon } from '@heroicons/react/20/solid'
 import ReactFlow, {
     useNodesState,
     useEdgesState,
     addEdge,
     MiniMap,
     Controls,
-    Background
+    Background,
+    Panel
 } from "reactflow";
-import "reactflow/dist/style.css";
 import TextUpdaterNode from './components/TextUpdaterNode.jsx';
+import "reactflow/dist/style.css";
 import "./index.css";
 
-
-const connectionLineStyle = { stroke: "#fff" };
+const connectionLineStyle = { stroke: "#dedede", strokeWidth: 2};
 const snapGrid = [20, 20];
-const nodeTypes = { textUpdater: TextUpdaterNode };
-
-const initialNodes = [
-    // { id: '1', position: { x: 0, y: 0 }, data: { label: '1' } },
-    // { id: '2', position: { x: 0, y: 100 }, data: { label: '2' } },
-    { id: 'node-1', type: 'textUpdater', position: { x: 0, y: 0 }, data: { value: 123 } },
-    { id: 'node-2', type: 'textUpdater', position: { x: 500, y: 50 }, data: { value: 456 } },
-];
-const initialEdges = [
-    {
-        id: 'horizontal-e1-2',
-        source: 'node-1',
-        type: 'smoothstep',
-        target: 'node-2',
-        animated: false,
-        sourceHandle: 'b',
-    },
-];
-
 const initBgColor = "#1A192B";
-
-const rfStyle = {
-    padding: 0,
-};
+const nodeTypes = {
+    textUpdater: TextUpdaterNode,
+}
 
 export default function App() {
     const [nodes, setNodes, onNodesChange] = useNodesState([]);
@@ -48,19 +29,18 @@ export default function App() {
         const onChange = (event) => {
             setNodes((nds) =>
                 nds.map((node) => {
-                    if (node.id !== "2") {
+                    if (node.id !== "234243") {
                         return node;
                     }
 
                     const color = event.target.value;
-
                     setBgColor(color);
 
                     return {
                         ...node,
                         data: {
                             ...node.data,
-                            color
+                            //.color
                         }
                     };
                 })
@@ -84,29 +64,31 @@ export default function App() {
                     color: initBgColor,
                     targets: [
                             {
-                                id: "model-a",
-                                label: "Model A",
+                                id: "t-model-a",
+                                label: "Model AB",
+                                colorClass: "green",
                             },
                             {
-                                id: "model-b",
+                                id: "t-model-b",
                                 label: "Model B",
+                                colorClass: "blue",
                             }
                         ],
                     sources: [
                         {
-                            id: "latent",
+                            id: "s-latent",
                             label: "Latent",
-                            color: "blue",
+                            colorClass: "blue",
                         },
                         {
-                            id: "image",
+                            id: "s-image",
                             label: "Image",
-                            color: "red",
+                            colorClass: "blue",
                         },
                         {
-                            id: "mask",
+                            id: "s-mask",
                             label: "Mask",
-                            color: "orange",
+                            colorClass: "red",
                         }
                     ]
                 },
@@ -133,7 +115,7 @@ export default function App() {
                 id: "e1-2",
                 source: "1",
                 target: "2",
-                targetHandle: "model-b",
+                targetHandle: "t-model-b",
                 animated: false,
                 style: { stroke: "#599e5e", strokeWidth: 3 }
             },
@@ -141,7 +123,7 @@ export default function App() {
                 id: "e2a-3",
                 source: "2",
                 target: "3",
-                sourceHandle: "a",
+                sourceHandle: "s-latent",
                 animated: true,
                 style: { stroke: "#599e5e", strokeWidth: 3 }
             }
@@ -154,16 +136,37 @@ export default function App() {
             //   style: { stroke: '#fff' },
             // },
         ]);
-    }, []);
+    }, [setEdges, setNodes]);
 
     const onConnect = useCallback(
         (params) =>
             setEdges((eds) =>
-                addEdge({ ...params, animated: true, style: { stroke: "#fff" } }, eds)
+                addEdge({ ...params, animated: true, style: { stroke: "#599e5e", strokeWidth: 3 } }, eds)
             ),
-        []
+        [setEdges]
     );
 
+    const renderRunControlls = () => {
+        return (
+            <div className="absolute top-0 right-0 p-4">
+                <div className="bg-white shadow-md rounded-xl">
+                    <div className="flex items-center space-x-2 p-2">
+                        <div className="flex items-center justify-center w-8 h-8 rounded">
+                            <PlayIcon className="h-4 w-4 text-blue-600" />
+                        </div>
+                        <div className="border-r border-gray-200 h-8"></div>
+                        <div className="flex items-center justify-center w-8 h-8 rounded">
+                            <PauseIcon className="h-4 w-4 text-slate-900" />
+                        </div>
+                        <div className="border-r border-gray-200 h-8"></div>
+                        <div className="flex items-center justify-center w-8 h-8 rounded">
+                            <StopIcon className="h-4 w-4 text-slate-900" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        )
+    }
 
     return (
         <ReactFlow
@@ -181,9 +184,13 @@ export default function App() {
             fitView
             attributionPosition="bottom-left"
         >
-                <Controls />
-                <MiniMap />
-                <Background variant="dots" gap={20} size={1} />
-            </ReactFlow>
+            <Panel position="top-right">
+                { renderRunControlls() }
+            </Panel>
+
+            <Controls />
+            <MiniMap />
+            <Background variant="dots" gap={20} size={1} />
+        </ReactFlow>
     );
 }
