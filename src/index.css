@@ -17,7 +17,56 @@
     opacity: 100%;
 }
 
+.react-flow__edge-connecting {
+    opacity: 50%;
+}
+
+.react-flow__edge-valid {
+    opacity: 100%;
+}
+
+.react-flow__edge-path, .react-flow__connection-path {
+    stroke: inherit;
+    stroke-width: 2px;
+}
+
 @tailwind base;
 @tailwind components;
-@tailwind utilities;
 
+/* DataType Handles */
+
+.typed-handles .latent-type {
+    @apply border-2 border-red-500 bg-red-300;
+}
+
+.typed-handles .image-type {
+    @apply border-2 border-blue-500 bg-blue-300;
+}
+
+.typed-handles .imagemask-type {
+    @apply border-2 border-green-500 bg-green-300;
+}
+
+.typed-handles .model-type {
+    @apply border-2 border-teal-500 bg-teal-300;
+}
+
+/* DataType Edges */
+
+.react-flow__edges .latent-type {
+    @apply stroke-red-300;
+}
+
+.react-flow__edges .image-type {
+    @apply stroke-blue-300;
+}
+
+.react-flow__edges .imagemask-type {
+    @apply stroke-green-300;
+}
+
+.react-flow__edges .model-type {
+    @apply stroke-teal-300;
+}
+
+@tailwind utilities;

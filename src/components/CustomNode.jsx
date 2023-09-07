@@ -1,19 +1,18 @@
-import React, { memo, useContext } from "react";
+import React, { memo } from "react";
 import { Handle } from 'reactflow';
 import PropTypes from 'prop-types';
-import { HandleDataTypeLookupContext } from './../HandleDataTypeContext';
 
 
 const CustomNode = memo(({ data, isConnectable }) => {
-    const getValue = useContext(HandleDataTypeLookupContext);
-    const maxLength = Math.max(data.targets.length, data.sources.length);
+    console.log(data);
+    const maxLength = Math.max(data.template.targets.length, data.template.sources.length);
 
-    const getColorClass = (colorClass) => `border-2 border-${colorClass}-500 bg-${colorClass}-300`;
+    //const getColorClass = (colorClass) => `border-2 border-${colorClass}-500 bg-${colorClass}-300`;
 
-    const renderTarget = (target, onConnect) => {
+    const renderTarget = (target) => {
         if (target) {
-            const colorClass = getValue(target.dataType);
-            const targetClassName = getColorClass(colorClass);
+            const dataType = target.dataType || 'unknown';
+            const colorClass = `border-2 ${dataType}-type`
 
             return (
                 <div key={target.id} className="flex items-center">
@@ -22,8 +21,7 @@ const CustomNode = memo(({ data, isConnectable }) => {
                             type="target"
                             position="left"
                             id={target.id}
-                            className={targetClassName}
-                            onConnect={onConnect}
+                            className={colorClass}
                             isConnectable={isConnectable}
                         />
                         <div className="ml-1">{target.label}</div>
@@ -34,10 +32,10 @@ const CustomNode = memo(({ data, isConnectable }) => {
         return null;
     };
 
-    const renderSource = (source, onConnect) => {
+    const renderSource = (source) => {
         if (source) {
-            const colorClass = getValue(source.dataType);
-            const sourceClassName = getColorClass(colorClass);
+            const dataType = source.dataType || 'unknown';
+            const colorClass = `border-2 ${dataType}-type`
             return (
                 <div key={source.id} className="flex items-center ml-auto">
                     <div className="flex items-center">
@@ -46,8 +44,7 @@ const CustomNode = memo(({ data, isConnectable }) => {
                             type="source"
                             position="right"
                             id={source.id}
-                            className={sourceClassName}
-                            onConnect={onConnect}
+                            className={colorClass}
                             isConnectable={isConnectable}
                         />
                     </div>
@@ -73,13 +70,13 @@ const CustomNode = memo(({ data, isConnectable }) => {
 
             <div className="p-2 bg-neutral-100">
                 {Array.from({ length: maxLength }, (_, index) => {
-                    const target = data.targets[index] || null;
-                    const source = data.sources[index] || null;
+                    const target = data.template.targets[index] || null;
+                    const source = data.template.sources[index] || null;
                     return (
-                        <div key={index} className="flex items-center text-xs font-semibold text-neutral-700 my-0.5">
-                            {renderTarget(target, data.onConnect)}
+                        <div key={index} className="flex items-center text-xs font-semibold text-neutral-700 my-0.5 typed-handles">
+                            {renderTarget(target)}
                             <div className="flex-grow"></div>
-                            {renderSource(source, data.onConnect)}
+                            {renderSource(source)}
                         </div>
                     );
                 })}
@@ -95,17 +92,22 @@ const CustomNode = memo(({ data, isConnectable }) => {
 CustomNode.propTypes = {
     data: PropTypes.shape({
         title: PropTypes.string.isRequired,
-        targets: PropTypes.arrayOf(PropTypes.shape({
-            id: PropTypes.string.isRequired,
-            label: PropTypes.string.isRequired,
-            dataType: PropTypes.string.isRequired,
-        })).isRequired,
-        sources: PropTypes.arrayOf(PropTypes.shape({
-            id: PropTypes.string.isRequired,
-            label: PropTypes.string.isRequired,
-            dataType: PropTypes.string.isRequired,
-        })).isRequired,
-        onConnect: PropTypes.func.isRequired,
+        template: PropTypes.shape({
+            targets: PropTypes.arrayOf(
+                PropTypes.shape({
+                    id: PropTypes.string.isRequired,
+                    label: PropTypes.string.isRequired,
+                    dataType: PropTypes.string.isRequired,
+                })
+            ).isRequired,
+            sources: PropTypes.arrayOf(
+                PropTypes.shape({
+                    id: PropTypes.string.isRequired,
+                    label: PropTypes.string.isRequired,
+                    dataType: PropTypes.string.isRequired,
+                })
+            ).isRequired,
+        }).isRequired,
     }).isRequired,
     isConnectable: PropTypes.bool.isRequired,
 };

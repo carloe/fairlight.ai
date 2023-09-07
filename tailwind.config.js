@@ -14,15 +14,17 @@ export default {
   purge: {
     options: {
       safelist: [
-        'border-red-500', 'bg-red-300',
-        'border-green-500', 'bg-green-300',
-        'border-purple-500', 'bg-purple-300',
-        'border-blue-500', 'bg-blue-300',
-        'border-neutral-500', 'bg-neutral-300',
-        'border-teal-500', 'bg-teal-300',
+        'border-red-500', 'bg-red-300', 'stroke-red-500',
+        'border-green-500', 'bg-green-300', 'stroke-green-500',
+        'border-purple-500', 'bg-purple-300', 'stroke-purple-500',
+        'border-blue-500', 'bg-blue-300', 'stroke-blue-500',
+        'border-neutral-500', 'bg-neutral-300', 'stroke-neutral-500',
+        'border-teal-500', 'bg-teal-300', 'stroke-teal-500',
       ],
     },
   },
-  plugins: [],
+  plugins: [
+
+  ],
 }
 
