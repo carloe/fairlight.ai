@@ -1,13 +1,11 @@
 import React, { memo } from "react";
 import { Handle } from 'reactflow';
 import PropTypes from 'prop-types';
-
+import {NodeTextfield} from './nodes/NodeTextfield';
 
 const CustomNode = memo(({ data, isConnectable }) => {
     console.log(data);
     const maxLength = Math.max(data.template.targets.length, data.template.sources.length);
-
-    //const getColorClass = (colorClass) => `border-2 border-${colorClass}-500 bg-${colorClass}-300`;
 
     const renderTarget = (target) => {
         if (target) {
@@ -54,13 +52,25 @@ const CustomNode = memo(({ data, isConnectable }) => {
         return null;
     };
 
-    const renderParameters = (parameters) => {
+    const renderParameter = (parameter) => {
+        let displayValue;
+        console.log('parameter:', parameter);
+        switch (parameter.type) {
+            case 'type1':
+                displayValue = 'Display for Type 1';
+                break;
+            case 'type2':
+                displayValue = 'Display for Type 2';
+                break;
+            case 'textfield':
+                return (
+                    <NodeTextfield template={parameter} />
+                )
+            default:
+                displayValue = parameter.type;
+        }
         return (
-            <ul>
-                {parameters.map((parameter) => (
-                    <p className="text-xs" key={parameter.id}>{parameter.id}</p>
-                ))}
-            </ul>
+            displayValue
         );
     }
 
@@ -73,12 +83,20 @@ const CustomNode = memo(({ data, isConnectable }) => {
             <div className="border-t border-gray-300"></div>
 
             {data.template.parameters.length > 0 && (
-                <div>
-                    <div className="m-2 p-1">
-                        {renderParameters(data.template.parameters)}
+                <form>
+                    <div className="m-2 p-1 pb-2">
+                        <div className="space-y-2">
+                            {data.template.parameters.map((parameter) => {
+                                return(
+                                    <div key={parameter.id}>
+                                        {renderParameter(parameter)}
+                                    </div>
+                                )
+                            })}
+                        </div>
                     </div>
                     <div className="border-t border-gray-300"></div>
-                </div>
+                </form>
             )}
 
             <div className="p-2 bg-neutral-100">
@@ -109,6 +127,9 @@ CustomNode.propTypes = {
             parameters: PropTypes.arrayOf(
                 PropTypes.shape({
                     id: PropTypes.string.isRequired,
+                    type: PropTypes.string.isRequired,
+                    label: PropTypes.string.isRequired,
+                    placeholder: PropTypes.string.isRequired,
                 })
             ).isRequired,
             targets: PropTypes.arrayOf(

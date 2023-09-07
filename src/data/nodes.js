@@ -8,9 +8,15 @@ const nodes = [
                 parameters: [
                     {
                         id: "p-text",
+                        type: "textfield",
+                        label: "Seed",
+                        placeholder: "Enter a seed",
                     },
                     {
                         id: "p-text2",
+                        type: "textfield",
+                        label: "Prompt",
+                        placeholder: "Enter a prompt",
                     }
                 ],
                 targets: [
