@@ -54,6 +54,16 @@ const CustomNode = memo(({ data, isConnectable }) => {
         return null;
     };
 
+    const renderParameters = (parameters) => {
+        return (
+            <ul>
+                {parameters.map((parameter) => (
+                    <p className="text-xs" key={parameter.id}>{parameter.id}</p>
+                ))}
+            </ul>
+        );
+    }
+
     return (
         <div className="bg-white rounded-lg shadow-md">
             <div className="bg-gray-100 rounded-t-lg">
@@ -62,11 +72,14 @@ const CustomNode = memo(({ data, isConnectable }) => {
 
             <div className="border-t border-gray-300"></div>
 
-            <div className="m-2">
-                Content
-            </div>
-
-            <div className="border-t border-gray-300"></div>
+            {data.template.parameters.length > 0 && (
+                <div>
+                    <div className="m-2 p-1">
+                        {renderParameters(data.template.parameters)}
+                    </div>
+                    <div className="border-t border-gray-300"></div>
+                </div>
+            )}
 
             <div className="p-2 bg-neutral-100">
                 {Array.from({ length: maxLength }, (_, index) => {
@@ -93,6 +106,11 @@ CustomNode.propTypes = {
     data: PropTypes.shape({
         title: PropTypes.string.isRequired,
         template: PropTypes.shape({
+            parameters: PropTypes.arrayOf(
+                PropTypes.shape({
+                    id: PropTypes.string.isRequired,
+                })
+            ).isRequired,
             targets: PropTypes.arrayOf(
                 PropTypes.shape({
                     id: PropTypes.string.isRequired,

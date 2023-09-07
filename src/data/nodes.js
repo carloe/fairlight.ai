@@ -5,6 +5,14 @@ const nodes = [
         data: {
             title: "Text Updater",
             template: {
+                parameters: [
+                    {
+                        id: "p-text",
+                    },
+                    {
+                        id: "p-text2",
+                    }
+                ],
                 targets: [
                     {
                         id: "t-model-a",
@@ -44,6 +52,9 @@ const nodes = [
         data: {
             title: "Out",
             template: {
+                parameters: [
+
+                ],
                 targets: [
                     {
                         id: "t-latent-c",
@@ -67,6 +78,9 @@ const nodes = [
         data: {
             title: "Out",
             template: {
+                parameters: [
+
+                ],
                 targets: [
                     {
                         id: "t-latent-34514",
