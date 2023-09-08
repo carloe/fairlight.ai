@@ -2,7 +2,7 @@ import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon, ArrowPathIcon } from '@heroicons/react/24/outline'
 
-import NodeEditor from './NodeEditor'
+import NodeEditor from './components/NodeEditor.jsx'
 
 const user = {
 

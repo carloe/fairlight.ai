@@ -2,10 +2,10 @@ import React, { useCallback, useEffect } from "react";
 import { shallow } from 'zustand/shallow';
 import { PauseIcon, PlayIcon, StopIcon } from '@heroicons/react/20/solid'
 import ReactFlow, { Background, Controls, MiniMap, Panel } from "reactflow";
-import CustomNode from './components/CustomNode.jsx';
+import CustomNode from './nodes/CustomNode.jsx';
 import "reactflow/dist/style.css";
-import "./index.css";
-import useStore from './store';
+import "../index.css";
+import useStore from '../store.jsx';
 
 const connectionLineStyle = { stroke: "#dedede", strokeWidth: 2 };
 const snapGrid = [20, 20];

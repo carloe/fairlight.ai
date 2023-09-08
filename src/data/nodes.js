@@ -104,6 +104,46 @@ const nodes = [
         },
         position: { x: 350, y: 0 }
     },
+    {
+        id: "3546",
+        type: "customNode",
+        data: {
+            title: "Model Loader",
+            template: {
+                parameters: [
+
+                ],
+                targets: [],
+                sources: [
+                    {
+                        id: "t-model-3231412",
+                        label: "Model",
+                        dataType: "model",
+                    },
+                ]
+            }
+        },
+        position: { x: 50, y: 0 }
+    },
+    {
+        id: "34256",
+        type: "customNode",
+        data: {
+            title: "Model Loader",
+            template: {
+                parameters: [],
+                targets: [],
+                sources: [
+                    {
+                        id: "t-model-3231412",
+                        label: "Model",
+                        dataType: "model",
+                    },
+                ]
+            }
+        },
+        position: { x: 50, y: 0 }
+    },
 ];
 
 export default nodes;

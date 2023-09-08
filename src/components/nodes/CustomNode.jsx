@@ -1,17 +1,20 @@
 import React, { memo } from "react";
 import { Handle } from 'reactflow';
 import PropTypes from 'prop-types';
-import {NodeTextfield} from './nodes/NodeTextfield';
+import {NodeTextfield} from './forms/NodeTextfield.jsx';
 
 const CustomNode = memo(({ data, isConnectable }) => {
     console.log(data);
+
+    const colorClass = (dataType) => {
+        const type = dataType || 'unknown';
+        return `border-2 ${type}-type`
+    }
+
     const maxLength = Math.max(data.template.targets.length, data.template.sources.length);
 
     const renderTarget = (target) => {
         if (target) {
-            const dataType = target.dataType || 'unknown';
-            const colorClass = `border-2 ${dataType}-type`
-
             return (
                 <div key={target.id} className="flex items-center">
                     <div className="flex items-center">
@@ -19,7 +22,7 @@ const CustomNode = memo(({ data, isConnectable }) => {
                             type="target"
                             position="left"
                             id={target.id}
-                            className={colorClass}
+                            className={colorClass(target.dataType)}
                             isConnectable={isConnectable}
                         />
                         <div className="ml-1">{target.label}</div>
@@ -32,8 +35,6 @@ const CustomNode = memo(({ data, isConnectable }) => {
 
     const renderSource = (source) => {
         if (source) {
-            const dataType = source.dataType || 'unknown';
-            const colorClass = `border-2 ${dataType}-type`
             return (
                 <div key={source.id} className="flex items-center ml-auto">
                     <div className="flex items-center">
@@ -42,7 +43,7 @@ const CustomNode = memo(({ data, isConnectable }) => {
                             type="source"
                             position="right"
                             id={source.id}
-                            className={colorClass}
+                            className={colorClass(source.dataType)}
                             isConnectable={isConnectable}
                         />
                     </div>
@@ -115,7 +116,7 @@ const CustomNode = memo(({ data, isConnectable }) => {
 
             <div className="border-t border-gray-300"></div>
 
-            <p className="text-xs font-regular text-green-500 px-2 pt-1 pb-1 bg-green-100 rounded-b-lg">Card content goes here.</p>
+            <p className="text-xs font-regular text-green-500 px-2 pt-1 pb-1 bg-green-100 rounded-b-lg">Status Footer</p>
         </div>
     );
 });
