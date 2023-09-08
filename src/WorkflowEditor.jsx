@@ -5,8 +5,6 @@ import { Bars3Icon, BellIcon, XMarkIcon, ArrowPathIcon } from '@heroicons/react/
 import NodeEditor from './components/NodeEditor.jsx'
 
 const user = {
-
-
     name: 'Tom Cook',
     email: 'tom@example.com',
     imageUrl:

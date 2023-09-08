@@ -29,6 +29,26 @@ const useStore = createWithEqualityFn((set, get) => ({
         const edgeClassName = `${dataType}-type`;
         set({ edges: addEdge({ ...connection, animated: false, className: edgeClassName }, cleanedEdges) });
     },
+    onPropertyChange: (id, value) => {
+        console.log('onPropertyChange:', id, value)
+        set((state) => {
+            const nodes = state.nodes.map((node) => {
+                if (node.id === id) {
+                    console.log('node changes:', node)
+                    return {
+                        ...node,
+                        data: {
+                            ...node.data,
+                            value,
+                        },
+                    };
+                }
+
+                return node;
+            });
+            return { nodes };
+        });
+    },
 }));
 
 export default useStore;

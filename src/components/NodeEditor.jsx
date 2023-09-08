@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import { shallow } from 'zustand/shallow';
 import { PauseIcon, PlayIcon, StopIcon } from '@heroicons/react/20/solid'
 import ReactFlow, { Background, Controls, MiniMap, Panel } from "reactflow";
@@ -9,9 +9,6 @@ import useStore from '../store.jsx';
 
 const connectionLineStyle = { stroke: "#dedede", strokeWidth: 2 };
 const snapGrid = [20, 20];
-const nodeTypes = {
-    customNode: CustomNode,
-}
 
 const selector = (state) => ({
     nodes: state.nodes,
@@ -45,26 +42,7 @@ const RunControls = () => (
 export default function NodeEditor() {
     const { nodes, edges, onNodesChange, onEdgesChange, onConnect, isValidConnection } = useStore(selector, shallow);
 
-    useEffect(() => {
-        const onChange = (event) => {
-            setNodes((nds) =>
-                nds.map((node) => {
-                    console.log('nodes.js changed:', node.id);
-                    if (node.id !== "234243") {
-                        return node;
-                    }
-
-                    return {
-                        ...node,
-                        data: {
-                            ...node.data,
-                            //.color
-                        }
-                    };
-                })
-            );
-        };
-    }, []);
+    const nodeTypes = useMemo(() => ({ customNode: CustomNode, }), []);
 
     const onConnectStart = useCallback((_, { nodeId, handleType, handleId }) => {
         console.log('on connect start', { nodeId, handleType, handleId });

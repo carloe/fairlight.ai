@@ -123,7 +123,7 @@ const nodes = [
                 ]
             }
         },
-        position: { x: 50, y: 0 }
+        position: { x: -150, y: 0 }
     },
     {
         id: "34256",
@@ -142,7 +142,7 @@ const nodes = [
                 ]
             }
         },
-        position: { x: 50, y: 0 }
+        position: { x: -150, y: 0 }
     },
 ];
 
