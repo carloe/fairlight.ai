@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import PropTypes from "prop-types";
 
-export function NodeTextfield({ template, onPropertyChange }) {
+export function NodeTextField({ template, onPropertyChange }) {
     const [inputValue, setInputValue] = useState('');
 
     const handleInputChange = (event) => {
@@ -34,11 +34,12 @@ export function NodeTextfield({ template, onPropertyChange }) {
     )
 }
 
-NodeTextfield.propTypes = {
+NodeTextField.propTypes = {
     template: PropTypes.shape({
         id: PropTypes.string.isRequired,
         label: PropTypes.string.isRequired,
         type: PropTypes.string.isRequired,
         placeholder: PropTypes.string.isRequired,
     }).isRequired,
+    onPropertyChange: PropTypes.func.isRequired,
 };

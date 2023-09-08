@@ -1,7 +1,7 @@
 import { memo, useCallback } from "react";
 import { Handle } from 'reactflow';
 import PropTypes from 'prop-types';
-import {NodeTextfield} from './forms/NodeTextfield.jsx';
+import {NodeTextField} from './forms/NodeTextField.jsx';
 import {shallow} from "zustand/shallow";
 import useStore from "../../store.jsx";
 
@@ -21,7 +21,7 @@ const renderParameter = (parameter, handleChange) => {
         case 'type2':
             return 'Display for Type 2';
         case 'textfield':
-            return <NodeTextfield template={parameter} onPropertyChange={handleChange}/>;
+            return <NodeTextField template={parameter} onPropertyChange={handleChange}/>;
         default:
             return parameter.type;
     }
