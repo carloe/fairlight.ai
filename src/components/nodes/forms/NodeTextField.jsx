@@ -1,17 +1,18 @@
 import { useState } from 'react';
 import PropTypes from "prop-types";
 
-export function NodeTextField({ template, onPropertyChange }) {
-    const [inputValue, setInputValue] = useState('');
+export function NodeTextField({ initialValue, template, onPropertyChange }) {
+    const [inputValue, setInputValue] = useState(initialValue || '');
 
     const handleInputChange = (event) => {
-        setInputValue(event.target.value);
+        const value = event.target.value;
+        if (value === '' || /^\d*\.?\d*$/.test(value)) {
+           setInputValue(value);
+        }
     };
 
     const handleInputBlur = (event) => {
-        if (event.target.value !== inputValue) {
-            onPropertyChange(event);
-        }
+        onPropertyChange(event);
     };
 
     return (
@@ -21,11 +22,12 @@ export function NodeTextField({ template, onPropertyChange }) {
             </label>
             <div className="relative rounded-md shadow-sm">
                 <input
-                    type="text"
+                    type='text'
                     name={template.id}
                     id={template.id}
+                    value={inputValue}
                     className="block text-xs w-full rounded-md border-0 p-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 xs:text-xs xs:leading-6"
-                    placeholder={template.placeholder}
+                    placeholder={template.placeholder || "None"}
                     onChange={handleInputChange}
                     onBlur={handleInputBlur}
                 />
@@ -35,11 +37,12 @@ export function NodeTextField({ template, onPropertyChange }) {
 }
 
 NodeTextField.propTypes = {
+    initialValue: PropTypes.string,
     template: PropTypes.shape({
         id: PropTypes.string.isRequired,
         label: PropTypes.string.isRequired,
         type: PropTypes.string.isRequired,
-        placeholder: PropTypes.string.isRequired,
+        placeholder: PropTypes.string,
     }).isRequired,
     onPropertyChange: PropTypes.func.isRequired,
 };

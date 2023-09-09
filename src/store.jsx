@@ -6,8 +6,8 @@ import initialEdges from './data/edges';
 const getNodeHandles = (nodes, connection) => {
     const sourceNode = nodes.find((node) => node.id === connection.source);
     const targetNode = nodes.find((node) => node.id === connection.target);
-    const sourceHandle = sourceNode.data.template.sources.find((handle) => handle.id === connection.sourceHandle);
-    const targetHandle = targetNode.data.template.targets.find((handle) => handle.id === connection.targetHandle);
+    const sourceHandle = sourceNode.data.outputs.find((handle) => handle.id === connection.sourceHandle);
+    const targetHandle = targetNode.data.parameters.find((handle) => handle.id === connection.targetHandle);
     return { sourceHandle, targetHandle };
 }
 

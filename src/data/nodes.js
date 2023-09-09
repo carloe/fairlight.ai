@@ -4,51 +4,56 @@ const nodes = [
         type: "customNode",
         data: {
             title: "Text Updater",
-            template: {
-                parameters: [
-                    {
-                        id: "p-text",
-                        type: "textfield",
-                        label: "Seed",
-                        placeholder: "Enter a seed",
-                    },
-                    {
-                        id: "p-text2",
-                        type: "textfield",
-                        label: "Prompt",
-                        placeholder: "Enter a prompt",
-                    }
-                ],
-                targets: [
-                    {
-                        id: "t-model-a",
-                        label: "Model AB",
-                        dataType: "model",
-                    },
-                    {
-                        id: "t-model-b",
-                        label: "Model B",
-                        dataType: "model",
-                    }
-                ],
-                sources: [
-                    {
-                        id: "s-latent",
-                        label: "Latent",
-                        dataType: "latent",
-                    },
-                    {
-                        id: "s-image",
-                        label: "Image",
-                        dataType: "image",
-                    },
-                    {
-                        id: "s-mask",
-                        label: "Mask",
-                        dataType: "imagemask",
-                    }
-                ]
-            }
+            parameters: [
+                {
+                    id: "p-text",
+                    type: "inline-input",
+                    dataType: "string",
+                    label: "Seed",
+                    placeholder: "Enter a seed",
+                },
+                {
+                    id: "p-text2",
+                    type: "inline-input",
+                    dataType: "string",
+                    label: "Prompt",
+                    placeholder: "Enter a prompt",
+                },
+                {
+                    id: "t-model-a",
+                    label: "Model AB",
+                    type: "input",
+                    dataType: "model",
+                    placeholder: "Select a Model",
+                },
+                {
+                    id: "t-model-b",
+                    label: "Model B",
+                    type: "input",
+                    dataType: "model",
+                    placeholder: "Select a Model",
+                }
+            ],
+            outputs: [
+                {
+                    id: "s-latent",
+                    label: "Latent",
+                    type: "output",
+                    dataType: "latent",
+                },
+                {
+                    id: "s-image",
+                    label: "Image",
+                    type: "output",
+                    dataType: "image",
+                },
+                {
+                    id: "s-mask",
+                    label: "Mask",
+                    type: "output",
+                    dataType: "imagemask",
+                },
+            ],
         },
         position: { x: 0, y: 50 }
     },
@@ -57,24 +62,21 @@ const nodes = [
         type: "customNode",
         data: {
             title: "Out",
-            template: {
-                parameters: [
-
-                ],
-                targets: [
-                    {
-                        id: "t-latent-c",
-                        label: "Latent",
-                        dataType: "latent",
-                    },
-                    {
-                        id: "t-image-c",
-                        label: "Image",
-                        dataType: "image",
-                    },
-                ],
-                sources: []
-            }
+            parameters: [
+                {
+                    id: "t-latent-c",
+                    label: "Latent",
+                    type: "input",
+                    dataType: "latent",
+                },
+                {
+                    id: "t-image-c",
+                    label: "Image",
+                    type: "input",
+                    dataType: "image",
+                },
+            ],
+            outputs: [],
         },
         position: { x: 350, y: 170 }
     },
@@ -83,24 +85,21 @@ const nodes = [
         type: "customNode",
         data: {
             title: "Out",
-            template: {
-                parameters: [
-
-                ],
-                targets: [
-                    {
-                        id: "t-latent-34514",
-                        label: "Latent",
-                        dataType: "latent",
-                    },
-                    {
-                        id: "t-mask-3421234",
-                        label: "Mask",
-                        dataType: "imagemask",
-                    },
-                ],
-                sources: []
-            }
+            parameters: [
+                {
+                    id: "t-latent-34514",
+                    label: "Latent",
+                    type: "input",
+                    dataType: "latent",
+                },
+                {
+                    id: "t-mask-3421234",
+                    label: "Mask",
+                    type: "input",
+                    dataType: "imagemask",
+                },
+            ],
+            outputs: [],
         },
         position: { x: 350, y: 0 }
     },
@@ -109,19 +108,15 @@ const nodes = [
         type: "customNode",
         data: {
             title: "Model Loader",
-            template: {
-                parameters: [
-
-                ],
-                targets: [],
-                sources: [
-                    {
-                        id: "t-model-3231412",
-                        label: "Model",
-                        dataType: "model",
-                    },
-                ]
-            }
+            parameters: [],
+            outputs: [
+                {
+                    id: "t-model-3231412",
+                    label: "Model",
+                    type: "output",
+                    dataType: "model",
+                },
+            ],
         },
         position: { x: -150, y: 0 }
     },
@@ -130,17 +125,15 @@ const nodes = [
         type: "customNode",
         data: {
             title: "Model Loader",
-            template: {
-                parameters: [],
-                targets: [],
-                sources: [
-                    {
-                        id: "t-model-3231412",
-                        label: "Model",
-                        dataType: "model",
-                    },
-                ]
-            }
+            parameters: [],
+            outputs: [
+                {
+                    id: "t-model-3231412",
+                    label: "Model",
+                    type: "output",
+                    dataType: "model",
+                },
+            ],
         },
         position: { x: -150, y: 0 }
     },
