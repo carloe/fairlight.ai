@@ -5,6 +5,7 @@ import { NodeTextField } from './forms/NodeTextField';
 import { shallow } from 'zustand/shallow';
 import useStore from '../../store';
 import { PropertyType } from './PropertyTypes';
+import ContextMenu from "../ContextMenu.jsx";
 
 const selector = (state) => ({
     onPropertyChange: state.onPropertyChange,
@@ -28,34 +29,38 @@ const CustomNode = memo(({ id, data, isConnectable }) => {
 
     const renderTarget = (target, isConnectable) =>
         target && (
-            <div key={target.id} className="flex items-center">
-                <div className="flex items-center">
-                    <Handle
-                        type="target"
-                        position="left"
-                        id={target.id}
-                        className={PropertyType.colorClassForType(target.dataType)}
-                        isConnectable={isConnectable}
-                    />
-                    <div className="ml-1">{target.label}</div>
+            <ContextMenu key={target.id}>
+                <div key={target.id} className="flex items-center">
+                    <div className="flex items-center">
+                        <Handle
+                            type="target"
+                            position="left"
+                            id={target.id}
+                            className={PropertyType.colorClassForType(target.dataType)}
+                            isConnectable={isConnectable}
+                        />
+                        <div className="ml-1">{target.label}</div>
+                    </div>
                 </div>
-            </div>
+            </ContextMenu>
         );
 
     const renderSource = (source, isConnectable) =>
         source && (
-            <div key={source.id} className="flex items-center ml-auto">
-                <div className="flex items-center">
-                    <div className="mr-1">{source.label}</div>
-                    <Handle
-                        type="source"
-                        position="right"
-                        id={source.id}
-                        className={PropertyType.colorClassForType(source.dataType)}
-                        isConnectable={isConnectable}
-                    />
+            <ContextMenu key={source.id}>
+                <div className="flex items-center ml-auto">
+                    <div className="flex items-center">
+                        <div className="mr-1">{source.label}</div>
+                        <Handle
+                            type="source"
+                            position="right"
+                            id={source.id}
+                            className={PropertyType.colorClassForType(source.dataType)}
+                            isConnectable={isConnectable}
+                        />
+                    </div>
                 </div>
-            </div>
+            </ContextMenu>
         );
 
     const { title, parameters, outputs } = data;
